@@ -94,25 +94,25 @@
   "projects": [
     {
       "id": "1",
-      "title": "Project One",
+      "title": "elo",
       "details": "This is a sample project",
       "percentComplete": 20,
       "approved": false,
       "startDate": null,
       "targetDate": null,
       "completionDate": null,
-      "customerId": "1"
+      "customerId": null
     },
     {
       "id": "2",
-      "title": "Project Two",
+      "title": "Project three",
       "details": "This is a sample project",
-      "percentComplete": 40,
+      "percentComplete": 13,
       "approved": false,
       "startDate": null,
       "targetDate": null,
       "completionDate": null,
-      "customerId": "3"
+      "customerId": null
     },
     {
       "id": "3",
