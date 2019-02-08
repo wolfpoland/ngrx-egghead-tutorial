@@ -4,6 +4,7 @@ import { Action } from '@ngrx/store';
 export enum ProjectActionTypes {
   ProjectSelected = '[Projects] Selected',
   AddProject = '[Projects] Add project',
+  LoadProject = '[Projects] Load projects',
   UpdateProject = '[Projects] Update project',
   DeleteProject = '[Projects] Delete project'
 }
@@ -12,6 +13,12 @@ export class SelectProject implements Action {
   readonly type = ProjectActionTypes.ProjectSelected;
 
   constructor(public payload: Project) {}
+}
+
+export class LoadProject implements Action {
+  readonly type = ProjectActionTypes.LoadProject;
+
+  constructor(public payload: Project[]) {}
 }
 
 export class AddProject implements Action {
@@ -32,4 +39,9 @@ export class DeleteProject implements Action {
   constructor(public payload: Project) {}
 }
 
-export type ProjectActions = SelectProject | AddProject | UpdateProject | DeleteProject;
+export type ProjectActions =
+  | SelectProject
+  | AddProject
+  | LoadProject
+  | UpdateProject
+  | DeleteProject;
