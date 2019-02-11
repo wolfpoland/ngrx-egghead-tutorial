@@ -1,5 +1,5 @@
 import { Project } from './../../projects/project.model';
-import { ProjectActions, ProjectActionTypes } from './projects.actions';
+import { ProjectActions, ProjectActionTypes, SelectProject } from './projects.actions';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 export const initialProjects: Project[] = [
@@ -59,7 +59,7 @@ export function projectReducer(
       };
     case ProjectActionTypes.LoadProject:
       return adapter.addMany(action.payload, state);
-    case ProjectActionTypes.AddProject:
+    case ProjectActionTypes.ProjectAdded:
       return adapter.addOne(action.payload, state)
     case ProjectActionTypes.UpdateProject:
       return adapter.upsertOne(action.payload, state)
@@ -70,3 +70,13 @@ export function projectReducer(
     }
   }
 }
+
+export const getSelectedProjectId = (state: ProjectState) => state.selectedProjectId;
+
+const { selectIds, selectEntities, selectAll} = adapter.getSelectors();
+export const selectProjectIds = selectIds;
+export const selectProjectEntities = selectEntities;
+export const selectAllProjects = selectAll;
+
+
+

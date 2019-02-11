@@ -1,4 +1,9 @@
-import { AddProject, UpdateProject, DeleteProject, LoadProject } from './../../../../../libs/core-data/src/lib/state/projects/projects.actions';
+import {
+  AddProject,
+  UpdateProject,
+  DeleteProject,
+  LoadProject
+} from './../../../../../libs/core-data/src/lib/state/projects/projects.actions';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
@@ -9,9 +14,9 @@ import {
   NotificationsService,
   CustomersService,
   ProjectState,
-  initialProjects
+  initialProjects,
+  selectAllProjects
 } from '@workshop/core-data';
-import { map } from 'rxjs/operators';
 
 const emptyProject: Project = {
   id: null,
@@ -38,11 +43,7 @@ export class ProjectsComponent implements OnInit {
     private ns: NotificationsService,
     private store: Store<ProjectState>
   ) {
-    this.projects$ = store.pipe(
-      select('projects'),
-      map(data => data.entities),
-      map(data => Object.keys(data).map(object => data[object]))
-    );
+    this.projects$ = store.pipe(select(selectAllProjects));
   }
 
   ngOnInit() {
@@ -69,7 +70,7 @@ export class ProjectsComponent implements OnInit {
 
   getProjects() {
     // this.projects$ = this.projectsService.all();
-    this.store.dispatch(new LoadProject(initialProjects))
+    this.store.dispatch(new LoadProject(initialProjects));
   }
 
   saveProject(project) {
@@ -81,8 +82,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   createProject(project) {
-    this.store.dispatch(new AddProject(project))
-
+    this.store.dispatch(new AddProject(project));
 
     this.ns.emit('Project created!');
     this.getProjects();
@@ -93,18 +93,15 @@ export class ProjectsComponent implements OnInit {
       this.resetCurrentProject();
     });
 
-
-    this.store.dispatch(new UpdateProject(project))
+    this.store.dispatch(new UpdateProject(project));
 
     this.ns.emit('Project saved!');
- 
   }
 
   deleteProject(project) {
-    this.store.dispatch(new DeleteProject(project))
+    this.store.dispatch(new DeleteProject(project));
 
     this.ns.emit('Project deleted!');
     this.resetCurrentProject();
-  
   }
 }
