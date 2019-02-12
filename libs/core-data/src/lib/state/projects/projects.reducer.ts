@@ -57,14 +57,18 @@ export function projectReducer(
         ...state,
         selectedProjectId: action.payload.id
       };
-    case ProjectActionTypes.LoadProject:
+    case ProjectActionTypes.ProjectLoaded:
       return adapter.addMany(action.payload, state);
     case ProjectActionTypes.ProjectAdded:
       return adapter.addOne(action.payload, state)
-    case ProjectActionTypes.UpdateProject:
+    case ProjectActionTypes.ProjectUpdated:{
+      console.log('ProjectUpdated: ', action.payload);
       return adapter.upsertOne(action.payload, state)
-    case ProjectActionTypes.DeleteProject:
+    }
+    case ProjectActionTypes.ProjectDeleted:{
+      console.log('ProjectDeleted: ', action.payload);
       return adapter.removeOne(action.payload.id, state);
+    }
     default: {
       return state;
     }

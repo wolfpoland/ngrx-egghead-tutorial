@@ -21,8 +21,6 @@ export class SelectProject implements Action {
 
 export class LoadProject implements Action {
   readonly type = ProjectActionTypes.LoadProject;
-
-  constructor(public payload: Project[]) {}
 }
 
 export class ProjectLoaded implements Action {
@@ -75,4 +73,5 @@ export type ProjectActions =
   | ProjectLoaded
   | UpdateProject
   | ProjectUpdated
-  | DeleteProject;
+  | DeleteProject
+  | ProjectDeleted;

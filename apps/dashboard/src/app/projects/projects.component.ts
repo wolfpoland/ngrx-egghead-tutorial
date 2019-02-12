@@ -69,8 +69,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   getProjects() {
-    // this.projects$ = this.projectsService.all();
-    this.store.dispatch(new LoadProject(initialProjects));
+    this.store.dispatch(new LoadProject());
   }
 
   saveProject(project) {
