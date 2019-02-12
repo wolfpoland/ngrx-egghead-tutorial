@@ -2,7 +2,8 @@ import {
   AddProject,
   UpdateProject,
   DeleteProject,
-  LoadProject
+  LoadProject,
+  SelectProject
 } from './../../../../../libs/core-data/src/lib/state/projects/projects.actions';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
@@ -15,17 +16,9 @@ import {
   CustomersService,
   ProjectState,
   initialProjects,
-  selectAllProjects
+  selectAllProjects,
+  selectCurrentProject
 } from '@workshop/core-data';
-
-const emptyProject: Project = {
-  id: null,
-  title: '',
-  details: '',
-  percentComplete: 0,
-  approved: false,
-  customerId: null
-};
 
 @Component({
   selector: 'app-projects',
@@ -35,7 +28,7 @@ const emptyProject: Project = {
 export class ProjectsComponent implements OnInit {
   projects$: Observable<Project[]>;
   customers$: Observable<Customer[]>;
-  currentProject: Project;
+  currentProject$: Observable<Project>;
 
   constructor(
     private projectsService: ProjectsService,
@@ -44,6 +37,7 @@ export class ProjectsComponent implements OnInit {
     private store: Store<ProjectState>
   ) {
     this.projects$ = store.pipe(select(selectAllProjects));
+    this.currentProject$ = store.pipe(select(selectCurrentProject));
   }
 
   ngOnInit() {
@@ -53,11 +47,11 @@ export class ProjectsComponent implements OnInit {
   }
 
   resetCurrentProject() {
-    this.currentProject = emptyProject;
+    this.store.dispatch(new SelectProject(null));
   }
 
   selectProject(project) {
-    this.currentProject = project;
+    this.store.dispatch(new SelectProject(project));
   }
 
   cancel(project) {
