@@ -1,3 +1,4 @@
+import { ProjectsFacade } from './../../../../../libs/core-data/src/lib/state/projects/projects.facade';
 import {
   AddProject,
   UpdateProject,
@@ -34,10 +35,11 @@ export class ProjectsComponent implements OnInit {
     private projectsService: ProjectsService,
     private customerService: CustomersService,
     private ns: NotificationsService,
-    private store: Store<ProjectState>
+    private store: Store<ProjectState>,
+    private projectsFacade: ProjectsFacade
   ) {
-    this.projects$ = store.pipe(select(selectAllProjects));
-    this.currentProject$ = store.pipe(select(selectCurrentProject));
+    this.projects$ = this.projectsFacade.projects$;
+    this.currentProject$ = this.projectsFacade.currentProject$;
   }
 
   ngOnInit() {
@@ -47,11 +49,12 @@ export class ProjectsComponent implements OnInit {
   }
 
   resetCurrentProject() {
-    this.store.dispatch(new SelectProject(null));
+    this.projectsFacade.selectProject(null);
   }
 
   selectProject(project) {
-    this.store.dispatch(new SelectProject(project));
+    console.log('select: ', project);
+    this.projectsFacade.selectProject(project);
   }
 
   cancel(project) {
@@ -63,10 +66,11 @@ export class ProjectsComponent implements OnInit {
   }
 
   getProjects() {
-    this.store.dispatch(new LoadProject());
+    this.projectsFacade.getProjects();
   }
 
   saveProject(project) {
+    console.log('project: ', project);
     if (!project.id) {
       this.createProject(project);
     } else {
@@ -75,7 +79,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   createProject(project) {
-    this.store.dispatch(new AddProject(project));
+    this.projectsFacade.createProject(project);
 
     this.ns.emit('Project created!');
     this.getProjects();
@@ -86,13 +90,13 @@ export class ProjectsComponent implements OnInit {
       this.resetCurrentProject();
     });
 
-    this.store.dispatch(new UpdateProject(project));
+    this.projectsFacade.updateProject(project);
 
     this.ns.emit('Project saved!');
   }
 
   deleteProject(project) {
-    this.store.dispatch(new DeleteProject(project));
+    this.projectsFacade.deleteProject(project);
 
     this.ns.emit('Project deleted!');
     this.resetCurrentProject();

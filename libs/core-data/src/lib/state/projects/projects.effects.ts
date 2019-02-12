@@ -17,6 +17,7 @@ export class ProjectEffects {
             return this.projectsService.all()
                 .pipe(
                     map((res: Project[]) => {
+                        console.log('response: ', res);
                         return new ProjectLoaded(res)
                     })
                 )

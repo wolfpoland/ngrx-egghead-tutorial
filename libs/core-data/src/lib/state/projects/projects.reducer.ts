@@ -28,15 +28,6 @@ export const initialProjects: Project[] = [
     customerId: null
   }
 ];
-
-const createProject = (projects, project) => [...projects, project];
-const updateProject = (projects, project) =>
-  projects.map(p => {
-    return p.id === project.id ? Object.assign({}, project) : p;
-  });
-const deleteProject = (projects, project) =>
-  projects.filter(w => project.id !== w.id);
-
 export interface ProjectState extends EntityState<Project> {
   selectedProjectId: string | null;
 }
@@ -55,7 +46,7 @@ export function projectReducer(
     case ProjectActionTypes.ProjectSelected:
       return {
         ...state,
-        selectedProjectId: action.payload.id
+        selectedProjectId: !!action.payload && !!action.payload.id ? action.payload.id : null
       };
     case ProjectActionTypes.ProjectLoaded:
       return adapter.addMany(action.payload, state);
@@ -75,7 +66,10 @@ export function projectReducer(
   }
 }
 
-export const getSelectedProjectId = (state: ProjectState) => state.selectedProjectId;
+export const getSelectedProjectId = (state: ProjectState) => {
+  console.log('state.selectedProjectId: ', state.selectedProjectId);
+  return state.selectedProjectId
+};
 
 const { selectIds, selectEntities, selectAll} = adapter.getSelectors();
 export const selectProjectIds = selectIds;

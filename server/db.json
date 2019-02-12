@@ -91,5 +91,34 @@
       "status": 2
     }
   ],
-  "projects": []
+  "projects": [
+    {
+      "title": "adasd",
+      "details": "sadasd",
+      "customerId": "2",
+      "percentComplete": 12,
+      "id": 3
+    },
+    {
+      "title": "sdfs",
+      "details": "sdfsd",
+      "customerId": "3",
+      "percentComplete": 11,
+      "id": 5
+    },
+    {
+      "title": "sada",
+      "details": "asdasd",
+      "customerId": "3",
+      "percentComplete": 17,
+      "id": 6
+    },
+    {
+      "title": "sada",
+      "details": "asdasd",
+      "customerId": "3",
+      "percentComplete": 17,
+      "id": 7
+    }
+  ]
 }
